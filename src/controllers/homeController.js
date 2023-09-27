@@ -20,6 +20,11 @@ class homeController {
         res.json(req.body);
         console.log(message);
     }
+
+    async displayGetCRUD(req, res) {
+        let data = await CRUDService.getAllUser();
+        res.render('displayCRUD.ejs', { data });
+    }
 }
 
 module.exports = new homeController();
