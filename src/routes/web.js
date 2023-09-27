@@ -8,6 +8,8 @@ let initWebRoutes = (app) => {
     router.get('/crud', homeController.getCRUD); // tao nguoi dung (template)
     router.post('/post-crud', homeController.postCRUD); // post nguoi dung len DB
     router.get('/get-crud', homeController.displayGetCRUD); // render user ra view
+    router.get('/edit-crud', homeController.getEditCRUD); // edit user
+    router.post('/put-crud', homeController.putCRUD); // put user len DB
 
     return app.use('/', router);
 };

@@ -25,6 +25,22 @@ class homeController {
         let data = await CRUDService.getAllUser();
         res.render('displayCRUD.ejs', { data });
     }
+
+    async getEditCRUD(req, res) {
+        let userId = req.query.id;
+        if (userId) {
+            let userData = await CRUDService.getUserInfoById(userId);
+            res.render('editCRUD.ejs', { user: userData });
+        } else {
+            res.send('User not found !!!');
+        }
+    }
+
+    async putCRUD(req, res) {
+        let data = req.body;
+        await CRUDService.UpdateUserData(data);
+        res.redirect('/get-crud');
+    }
 }
 
 module.exports = new homeController();
