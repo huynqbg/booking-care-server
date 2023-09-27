@@ -17,7 +17,7 @@ class homeController {
 
     async postCRUD(req, res) {
         let message = await CRUDService.createNewUser(req.body);
-        res.json(req.body);
+        res.redirect('/get-crud');
         console.log(message);
     }
 
@@ -40,6 +40,16 @@ class homeController {
         let data = req.body;
         await CRUDService.UpdateUserData(data);
         res.redirect('/get-crud');
+    }
+
+    async deleteCRUD(req, res) {
+        let id = req.query.id;
+        if (id) {
+            await CRUDService.deleteUserById(id);
+            res.redirect('back');
+        } else {
+            res.send('User not found !!!');
+        }
     }
 }
 
