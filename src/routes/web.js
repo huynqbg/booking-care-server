@@ -17,6 +17,7 @@ let initWebRoutes = (app) => {
 
     // viet chuan api :))
     router.post('/api/login', userController.handleLogin);
+    router.get('/api/get-all-users', userController.handleGetAllUsers);
 
     return app.use('/', router);
 };

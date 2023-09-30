@@ -1,16 +1,25 @@
-import express, { urlencoded } from 'express'
-import viewEngine from './config/viewEngine'
-import initWebRoutes from './routes/web'
-import connectDB from './config/connectDB'
-require('dotenv').config() // de chay port
+import express, { urlencoded } from 'express';
+import viewEngine from './config/viewEngine';
+import initWebRoutes from './routes/web';
+import connectDB from './config/connectDB';
+import cors from 'cors';
 
-let app = express()
+require('dotenv').config(); // de chay port
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+let app = express();
 
-viewEngine(app)
-initWebRoutes(app)
+app.use(
+    cors({
+        origin: 'http://localhost:4200',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+viewEngine(app);
+initWebRoutes(app);
 
 connectDB();
 
@@ -18,4 +27,4 @@ let port = process.env.PORT || 3000;
 
 app.listen(port, () => {
     console.log(`Server run in http://localhost:${port}/`);
-})
+});
