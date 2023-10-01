@@ -16,8 +16,11 @@ let initWebRoutes = (app) => {
     router.get('/delete-crud', homeController.deleteCRUD); // delete user on DB
 
     // viet chuan api :))
-    router.post('/api/login', userController.handleLogin);
-    router.get('/api/get-all-users', userController.handleGetAllUsers);
+    router.post('/api/login', userController.handleLogin); // api login
+    router.get('/api/get-all-users', userController.handleGetAllUsers); // api get all user
+    router.post('/api/create-new-user', userController.handleCreateNewUser); // add user
+    router.put('/api/edit-user', userController.handleEditUser);
+    router.delete('/api/delete-user', userController.handleDeleteUser);
 
     return app.use('/', router);
 };

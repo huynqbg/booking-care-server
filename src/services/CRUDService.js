@@ -61,7 +61,7 @@ let getUserInfoById = (userId) => {
     });
 };
 
-let UpdateUserData = async (data) => {
+let UpdateUserData = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let user = await db.User.findOne({
@@ -72,15 +72,18 @@ let UpdateUserData = async (data) => {
                 user.lastName = data.lastName;
                 user.address = data.address;
                 await user.save();
+                let allUsers = await db.User.findAll();
+                resolve(allUsers);
+            } else {
                 resolve();
             }
         } catch (error) {
-            reject(error);
+            console.log(error);
         }
     });
 };
 
-let deleteUserById = async (userId) => {
+let deleteUserById = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
             let user = await db.User.findOne({
