@@ -1,3 +1,5 @@
+/** @format */
+
 import express, { urlencoded } from 'express';
 import viewEngine from './config/viewEngine';
 import initWebRoutes from './routes/web';
@@ -15,8 +17,8 @@ app.use(
     })
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 viewEngine(app);
 initWebRoutes(app);

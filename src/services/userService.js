@@ -117,6 +117,7 @@ class userService {
                         gender: data.gender,
                         roleId: data.roleId,
                         positionId: data.positionId,
+                        image: data.avatar,
                     });
 
                     resolve({
@@ -151,6 +152,9 @@ class userService {
                     user.positionId = data.positionId;
                     user.gender = data.gender;
                     user.phoneNumber = data.phoneNumber;
+                    if (data.avatar) {
+                        user.image = data.avatar;
+                    }
 
                     await user.save();
 
