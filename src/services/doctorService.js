@@ -59,11 +59,7 @@ class DoctorService {
     saveDetailInfoDoctor(inputData) {
         return new Promise(async (resolve, reject) => {
             try {
-                if (
-                    !inputData.doctorId ||
-                    !inputData.contentHTML ||
-                    !inputData.contentMarkdown
-                ) {
+                if (!inputData.doctorId || !inputData.contentHTML || !inputData.contentMarkdown) {
                     resolve({
                         errCode: 1,
                         errMessage: 'Missing parameter',
@@ -79,6 +75,42 @@ class DoctorService {
                     resolve({
                         errCode: 0,
                         errMessage: 'Save info Doctor successfully',
+                    });
+                }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    getDetailDoctorById(id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                if (!id) {
+                    resolve({
+                        errCode: 1,
+                        errMessage: 'Missing required parameter id',
+                    });
+                } else {
+                    let data = await db.User.findOne({
+                        where: { id },
+                        attributes: {
+                            exclude: ['password', 'image'],
+                        },
+                        include: [
+                            {
+                                model: db.Markdown,
+                                attributes: ['description', 'contentHTML', 'contentMarkdown'],
+                            },
+                            { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                        ],
+                        raw: true,
+                        nest: true,
+                    });
+
+                    resolve({
+                        errCode: 0,
+                        data: data,
                     });
                 }
             } catch (error) {
