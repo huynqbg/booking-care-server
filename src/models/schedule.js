@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     Schedule.init(
         {
-            currentNumver: DataTypes.INTEGER,
+            currentNumber: DataTypes.INTEGER,
             maxNumber: DataTypes.INTEGER,
             date: DataTypes.DATE,
             timeType: DataTypes.STRING,
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'Schedule',
-        }
+        },
     );
     return Schedule;
 };

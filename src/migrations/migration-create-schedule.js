@@ -8,7 +8,7 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            currentNumver: {
+            currentNumber: {
                 type: Sequelize.INTEGER,
             },
             maxNumber: {

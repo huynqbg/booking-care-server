@@ -12,9 +12,9 @@ let app = express();
 
 app.use(
     cors({
-        origin: 'http://localhost:4200',
+        origin: process.env.URL_CLIENT,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    })
+    }),
 );
 
 app.use(express.json({ limit: '50mb' }));
