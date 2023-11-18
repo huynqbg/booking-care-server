@@ -127,7 +127,7 @@ class DoctorService {
                     });
 
                     if (data && data.image) {
-                        data.image = new Buffer(data.image, 'base64').toString('binary');
+                        data.image = Buffer.from(data.image, 'base64').toString('binary');
                     }
 
                     if (!data) data = {};
@@ -188,6 +188,32 @@ class DoctorService {
                     resolve({
                         errCode: 0,
                         errMessage: 'OK',
+                    });
+                }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    getScheduleDoctorByDate(doctorId, date) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                if (!doctorId || !date) {
+                    resolve({
+                        errCode: 1,
+                        errMessage: 'Missing required parameter',
+                    });
+                } else {
+                    let data = await db.Schedule.findAll({
+                        where: { doctorId, date },
+                    });
+
+                    if (!data) data = [];
+
+                    resolve({
+                        errCode: 0,
+                        data,
                     });
                 }
             } catch (error) {

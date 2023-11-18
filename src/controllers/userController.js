@@ -39,7 +39,6 @@ class userController {
 
     async handleCreateNewUser(req, res) {
         let message = await userService.createNewUser(req.body);
-        console.log(message);
         res.status(200).json(message);
     }
 

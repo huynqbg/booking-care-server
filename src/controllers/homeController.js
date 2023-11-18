@@ -18,7 +18,6 @@ class homeController {
     async postCRUD(req, res) {
         let message = await CRUDService.createNewUser(req.body);
         res.redirect('/get-crud');
-        console.log(message);
     }
 
     async displayGetCRUD(req, res) {
