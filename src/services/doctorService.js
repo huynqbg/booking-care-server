@@ -1,6 +1,6 @@
 import db from '../models';
 require('dotenv').config();
-import _ from 'lodash';
+import _, { includes } from 'lodash';
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -167,17 +167,9 @@ class DoctorService {
                         raw: true,
                     });
 
-                    // conver date
-                    if (existing && existing.length > 0) {
-                        existing = existing.map((item) => {
-                            item.date = new Date(item.date).getTime();
-                            return item;
-                        });
-                    }
-
                     // compare difference schedule
                     let toCreate = _.differenceWith(schedule, existing, (a, b) => {
-                        return a.timeType === b.timeType && a.date === b.date;
+                        return a.timeType === b.timeType && +a.date === +b.date;
                     });
 
                     // create Data
@@ -207,6 +199,15 @@ class DoctorService {
                 } else {
                     let data = await db.Schedule.findAll({
                         where: { doctorId, date },
+                        include: [
+                            {
+                                model: db.Allcode,
+                                as: 'timeTypeData',
+                                attributes: ['valueEn', 'valueVi'],
+                            },
+                        ],
+                        raw: false,
+                        nest: true,
                     });
 
                     if (!data) data = [];
