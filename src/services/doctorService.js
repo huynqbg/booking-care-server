@@ -162,6 +162,17 @@ class DoctorService {
                                 attributes: ['description', 'contentHTML', 'contentMarkdown'],
                             },
                             { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                            {
+                                model: db.Doctor_Info,
+                                attributes: {
+                                    exclude: ['id', 'doctorId'],
+                                },
+                                include: [
+                                    { model: db.Allcode, as: 'priceData', attributes: ['valueEn', 'valueVi'] },
+                                    { model: db.Allcode, as: 'provinceData', attributes: ['valueEn', 'valueVi'] },
+                                    { model: db.Allcode, as: 'paymentData', attributes: ['valueEn', 'valueVi'] },
+                                ],
+                            },
                         ],
                         raw: false,
                         nest: true,
