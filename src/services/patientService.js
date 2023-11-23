@@ -11,6 +11,7 @@ class PatientService {
                         errMessage: 'Missing required parameter',
                     });
                 } else {
+                    // send email: nodemailer
                     await emailService.sendSimpleEmail({
                         receiverEmail: data.email,
                         time: '15:00 - 16:00 - Thứ hai - 27/11/2023',
@@ -27,8 +28,6 @@ class PatientService {
                             roleId: 'R3',
                         },
                     });
-
-                    // console.log(user[0]);
 
                     if (user && user[0]) {
                         await db.Booking.findOrCreate({
