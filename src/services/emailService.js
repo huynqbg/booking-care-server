@@ -19,7 +19,14 @@ let sendSimpleEmail = async (dataSend) => {
         from: '"Huy Nguyen Admin 👻" <huynq2x@gmail.com>', // sender address
         to: dataSend.receiverEmail, // list of receivers
         subject: 'Thông tin đặt lịch khám bệnh', // Subject line
-        html: `
+        html: getBodyHTMLEmail(dataSend), // html body
+    });
+};
+
+let getBodyHTMLEmail = (dataSend) => {
+    let html = '';
+    if (dataSend.language === 'vi') {
+        html = `
             <h3> Xin chào ${dataSend.patientName}! </h3>
             <p> Bạn nhận được email này vì đã đặt lịch khám bệnh online trên Huynq BookingCare </p>
             <p> Thông tin lịch khám của bạn như sau: </p>
@@ -29,9 +36,23 @@ let sendSimpleEmail = async (dataSend) => {
             <p> Nếu các thông tin trên là đúng sự thật, vui lòng click vào đường link bên dưới để xác nhận lịch khám và hoàn tất thủ tục khám bệnh </p>
             <div> <a href="${dataSend.redirectLink}" target="_blank"> Click vào đây để xác nhận lịch khám </a> </div>
             
-            <div> Trân trọng cảm ơn! </div>
-            `, // html body
-    });
+            <div> Trân trọng cảm ơn! </div> 
+        `;
+    } else if (dataSend.language === 'en') {
+        html = `
+            <h3> Dear ${dataSend.patientName}! </h3>
+            <p> You received this email because you have booked an online appointment on Huynq BookingCare </p>
+            <p> Your appointment information is as follows: </p>
+            <div><b> Time: ${dataSend.time} </b></div>
+            <div><b> Doctor: ${dataSend.doctorName} </b></div>
+
+            <p> If the above information is true, please click on the link below to confirm your appointment and complete the examination procedure </p>
+            <div> <a href="${dataSend.redirectLink}" target="_blank"> Click here to confirm the appointment </a> </div>
+            
+            <div> Thank you! </div> 
+        `;
+    }
+    return html;
 };
 
 module.exports = {

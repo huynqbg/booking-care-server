@@ -5,7 +5,7 @@ class PatientService {
     postBookAppointment(data) {
         return new Promise(async (resolve, reject) => {
             try {
-                if (!data.email || !data.doctorId || !data.timeType || !data.date) {
+                if (!data.email || !data.doctorId || !data.timeType || !data.date || !data.fullName) {
                     resolve({
                         errCode: 1,
                         errMessage: 'Missing required parameter',
@@ -14,9 +14,10 @@ class PatientService {
                     // send email: nodemailer
                     await emailService.sendSimpleEmail({
                         receiverEmail: data.email,
-                        time: '15:00 - 16:00 - Thứ hai - 27/11/2023',
-                        doctorName: 'Nguyen Van A',
-                        patientName: 'Hoang Nguyen',
+                        time: data.timeString,
+                        doctorName: data.doctorName,
+                        patientName: data.fullName,
+                        language: data.language,
                         redirectLink: `https://github.com/huynqbg`,
                     });
 
