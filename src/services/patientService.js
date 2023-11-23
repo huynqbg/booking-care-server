@@ -1,4 +1,5 @@
 import db from '../models/index.js';
+import emailService from './emailService.js';
 
 class PatientService {
     postBookAppointment(data) {
@@ -10,6 +11,15 @@ class PatientService {
                         errMessage: 'Missing required parameter',
                     });
                 } else {
+                    await emailService.sendSimpleEmail({
+                        receiverEmail: data.email,
+                        time: '15:00 - 16:00 - Thứ hai - 27/11/2023',
+                        doctorName: 'Nguyen Van A',
+                        patientName: 'Hoang Nguyen',
+                        redirectLink: `https://github.com/huynqbg`,
+                    });
+
+                    // upsert patient: nếu có thì update, không có thì insert
                     let user = await db.User.findOrCreate({
                         where: { email: data.email },
                         defaults: {
