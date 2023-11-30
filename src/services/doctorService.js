@@ -60,24 +60,39 @@ class DoctorService {
         });
     }
 
+    checkRequiredFields(inputData) {
+        const arrFields = [
+            'doctorId',
+            'contentHTML',
+            'contentMarkdown',
+            'action',
+            'selectedPrice',
+            'selectedPayment',
+            'selectedProvince',
+            'nameClinic',
+            'addressClinic',
+            'note',
+            'specialtyId',
+        ];
+        let isValid = true;
+        let element = '';
+        for (let i = 0; i < arrFields.length; i++) {
+            if (!inputData[arrFields[i]]) {
+                isValid = false;
+                element = arrFields[i];
+                break;
+            }
+        }
+        return { isValid, element };
+    }
     saveDetailInfoDoctor(inputData) {
         return new Promise(async (resolve, reject) => {
             try {
-                if (
-                    !inputData.doctorId ||
-                    !inputData.contentHTML ||
-                    !inputData.contentMarkdown ||
-                    !inputData.action ||
-                    !inputData.selectedPrice ||
-                    !inputData.selectedPayment ||
-                    !inputData.selectedProvince ||
-                    !inputData.nameClinic ||
-                    !inputData.addressClinic ||
-                    !inputData.note
-                ) {
+                let check = this.checkRequiredFields(inputData);
+                if (!check.isValid) {
                     resolve({
                         errCode: 1,
-                        errMessage: 'Missing parameter',
+                        errMessage: `Missing parameter: ${check.element}`,
                     });
                 } else {
                     // Upsert Markdown
@@ -117,6 +132,8 @@ class DoctorService {
                         doctorInfo.addressClinic = inputData.addressClinic;
                         doctorInfo.nameClinic = inputData.nameClinic;
                         doctorInfo.note = inputData.note;
+                        doctorInfo.specialtyId = inputData.specialtyId;
+                        doctorInfo.clinicId = inputData.clinicId;
                         await doctorInfo.save();
                     } else {
                         // create
@@ -128,6 +145,8 @@ class DoctorService {
                             addressClinic: inputData.addressClinic,
                             nameClinic: inputData.nameClinic,
                             note: inputData.note,
+                            specialtyId: inputData.specialtyId,
+                            clinicId: inputData.clinicId,
                         });
                     }
 
