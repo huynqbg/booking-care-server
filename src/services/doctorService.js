@@ -1,6 +1,7 @@
 import db from '../models';
 require('dotenv').config();
-import _, { includes } from 'lodash';
+import _ from 'lodash';
+import emailService from './emailService';
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -419,6 +420,45 @@ class DoctorService {
                     resolve({
                         errCode: 0,
                         data: listPatient,
+                    });
+                }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    sendRemedy(data) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                if (!data.email || !data.doctorId || !data.patientId || !data.timeType || !data.imgBase64) {
+                    resolve({
+                        errCode: 1,
+                        errMessage: 'Missing required parameter',
+                    });
+                } else {
+                    // update status booking
+                    let appointment = await db.Booking.findOne({
+                        where: {
+                            doctorId: data.doctorId,
+                            patientId: data.patientId,
+                            timeType: data.timeType,
+                            statusId: 'S2',
+                        },
+                        raw: false,
+                    });
+
+                    if (appointment) {
+                        appointment.statusId = 'S3';
+                        await appointment.save();
+                    }
+
+                    // send email to patient (remedy)
+                    await emailService.sendAttachment(data);
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'OK',
                     });
                 }
             } catch (error) {
