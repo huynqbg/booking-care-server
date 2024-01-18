@@ -10,7 +10,7 @@ let app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:4200',
+    origin: 'https://booking-care-client.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
 );
