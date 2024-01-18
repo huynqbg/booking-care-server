@@ -234,7 +234,7 @@ class DoctorService {
 
                     // get all existing schedule
                     let existing = await db.Schedule.findAll({
-                        where: { doctorId: data.doctorId, date: data.formatedDate },
+                        where: { doctorId: data.doctorId, date: '' + data.formatedDate },
                         attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
                         raw: true,
                     });
