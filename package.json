@@ -7,9 +7,9 @@
     "node": "14.x"
   },
   "scripts": {
-    "start": "node --exec babel-node build/server.js",
+    "start": "node --exec babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d build --copy-files"
+    "build": "babel src -d --copy-files"
   },
   "keywords": [
     "booking-care-api"
