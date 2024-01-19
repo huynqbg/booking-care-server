@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "backend nodejs",
   "main": "server.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js",
+    "start": "node --exec babel-node build/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d build --copy-files"
   },
