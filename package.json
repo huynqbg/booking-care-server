@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node --exec babel-node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d --copy-files"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "booking-care-api"
